@@ -7,21 +7,37 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var("--font-gotham-book"), Helvetica, sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+h1 {
+  /* font-family: "GothamSSm-Medium_Web"; */
+  font-family: var("--font-gotham-medium");
+  font-size: 2rem;
+}
+
+#user-input label {
+  display: block;
+}
+
+#user-input input {
+  width: 100%;
+  border: 1px solid #0a0a0a;
+  font-size: 1rem;
 }
