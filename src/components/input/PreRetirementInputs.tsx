@@ -18,7 +18,7 @@ export default function PreRetirementInputs(props: InputSectionInterface) {
         onChange={props.onChange}
       />
       <NumberInput
-        inputKey="principleAmount"
+        inputKey="principalAmount"
         label="Principal Amount"
         value={props.preAssumption?.principalAmount}
         onChange={props.onChange}

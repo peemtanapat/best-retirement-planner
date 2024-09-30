@@ -7,6 +7,12 @@
   --foreground: #171717;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -15,7 +21,12 @@
 } */
 
 body {
-  color: var(--foreground);
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
+  color: #5C5E62;
+  /* color: var(--foreground); */
   background: var(--background);
   font-family: var("--font-gotham-book"), Helvetica, sans-serif;
 }
@@ -29,15 +40,55 @@ body {
 h1 {
   /* font-family: "GothamSSm-Medium_Web"; */
   font-family: var("--font-gotham-medium");
-  font-size: 2rem;
+  font-size: 1rem;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.input-container,
+.output-container {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.input-container {
+  flex: 4;
+}
+
+.output-container {
+  flex: 6;
+}
+
+#user-input {
+  margin: 20px 10px 20px 10px;
 }
 
 #user-input label {
   display: block;
+  font-size: 1rem;
+  font-weight: 450;
+  margin-bottom: 6px;
 }
 
 #user-input input {
+  color: #3A3C42;
+  font-size: 0.8rem;
+  font-weight: 700;
   width: 100%;
-  border: 1px solid #0a0a0a;
-  font-size: 1rem;
+  background-color: #F4F4F4;
+  border-radius: 3px;
+  height: 2.5rem;
+  padding-left: 0.7rem;
+  margin-bottom: 10px;
+}
+
+.graph-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
 }

@@ -3,13 +3,13 @@
 import { useState } from "react";
 import AllInputs from "@/components/input/AllInputs";
 import { PreAssumptionInterface } from "@/interfaces/data";
-import TotalValue from "@/components/output/TotalValue";
+import Graph from "@/components/output/Graph";
 
 const initialPreAssumption: PreAssumptionInterface = {
   inflationRate: 3,
   startingAge: 30,
   retirementAge: 60,
-  principalAmount: 20000,
+  principalAmount: 200000,
   monthlySave: 10000,
   annualReturn: 7,
 };
@@ -30,12 +30,15 @@ export default function Page() {
   }
 
   return (
-    <div>
-      <h1>Your Investment</h1>
-
-      <AllInputs preAssumption={preAssumption} onChange={handleChange} />
-      <p>Retirement Time(years)={retirementAge - startingAge}</p>
-      <TotalValue input={preAssumption} />
+    <div className="container">
+      <div className="input-container">
+        <h1>Your Investment</h1>
+        <AllInputs preAssumption={preAssumption} onChange={handleChange} />
+      </div>
+      <div className="output-container">
+        <h1>Result</h1>
+        <Graph input={preAssumption} />
+      </div>
     </div>
   );
 }

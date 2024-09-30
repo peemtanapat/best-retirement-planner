@@ -1,4 +1,5 @@
 import { PreAssumptionInterface } from "@/interfaces/data";
+import Graph from "./Graph";
 
 const COMPOUND_FREQ_PER_YEAR = 1; //3
 const DEPOSIT_FREQ_PER_YEAR = 12; //6
@@ -28,7 +29,6 @@ export default function TotalValue(props: TotalValueProps) {
   function calculate() {
     const yearOfGrowth = retirementAge - startingAge; //4
     const depositTimes = yearOfGrowth * DEPOSIT_FREQ_PER_YEAR; //7
-    console.log({ monthlySave, depositTimes });
     const rate =
       ((1 + annualReturn / COMPOUND_FREQ_PER_YEAR) ^
         (COMPOUND_FREQ_PER_YEAR / DEPOSIT_FREQ_PER_YEAR)) -
@@ -39,7 +39,7 @@ export default function TotalValue(props: TotalValueProps) {
 
     return format(futureValue);
   }
-  calculate();
+
   return (
     <div>
       <p>Future Value={calculate()}</p>

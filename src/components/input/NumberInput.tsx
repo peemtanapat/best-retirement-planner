@@ -16,6 +16,7 @@ export default function NumberInput({
       <label>{label}</label>
       <input
         type="text"
+        inputMode="numeric"
         title="input"
         value={value}
         onChange={(event) => onChange(inputKey, event.target.value)}
