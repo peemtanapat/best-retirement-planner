@@ -5,6 +5,9 @@ export interface PreAssumptionInterface {
   principalAmount: number;
   monthlySave: number;
   annualReturn: number;
+  retirePeriod?: number;
   goal?: number;
+  desiredMonthlyIncome?: number;
+  annualReturnList?: number[];
   monthlySaveList?: number[];
 }

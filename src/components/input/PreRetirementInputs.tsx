@@ -6,18 +6,6 @@ export default function PreRetirementInputs(props: InputSectionInterface) {
   return (
     <Fragment>
       <NumberInput
-        inputKey="startingAge"
-        label="Starting Age"
-        value={props.preAssumption?.startingAge}
-        onChange={props.onChange}
-      />
-      <NumberInput
-        inputKey="retirementAge"
-        label="Retirement Age"
-        value={props.preAssumption?.retirementAge}
-        onChange={props.onChange}
-      />
-      <NumberInput
         inputKey="principalAmount"
         label="Principal Amount"
         value={props.preAssumption?.principalAmount}

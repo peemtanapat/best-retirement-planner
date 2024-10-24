@@ -105,7 +105,27 @@ describe("Calculator Utility", () => {
       const result = calculate(initialPreAssumption);
       const lastResult = result[result.length - 1];
 
-      expect(lastResult.goalWithInflation).toEqual(11000);
+      expect(lastResult.goal).toEqual(11000);
+    });
+  });
+  describe("annualReturnList, inconsistent annual return", () => {
+    it("must return last total value=10473", () => {
+      const initialPreAssumption: PreAssumptionInterface = {
+        inflationRate: 3,
+        startingAge: 55,
+        retirementAge: 60,
+        principalAmount: 1000,
+        monthlySave: 100,
+        annualReturn: 10,
+        annualReturnList: [10, 10, 8, 8, 5],
+        monthlySaveList: [100, 110, 121, 133.1, 146.41],
+        goal: 9488.6,
+      };
+
+      const result = calculate(initialPreAssumption);
+      const lastResult = result[result.length - 1];
+
+      expect(lastResult.stock).toEqual(10473);
     });
   });
 });
