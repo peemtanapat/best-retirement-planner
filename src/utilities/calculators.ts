@@ -10,7 +10,7 @@ export function calculate({ personalData, portfolios }: State) {
   const portTracker: any = {};
 
   for (const port of portfolios) {
-    portTracker[port.name] = port.principalAmount;
+    portTracker[port.name] = +port.principalAmount;
   }
 
   for (let year = startingAge; year < retirementAge; year++) {
@@ -33,6 +33,8 @@ export function calculate({ personalData, portfolios }: State) {
 
     data.push(portYear);
   }
+
+  console.log({ data });
 
   return data;
 }

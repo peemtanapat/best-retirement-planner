@@ -29,10 +29,7 @@ export const usePortfolioStore = create<State & Actions>((set, get) => ({
       const res = await fetch("/api/states/0000/portfolios");
 
       const resBody = await res.json();
-      console.log({
-        resFetchPortfolios: resBody,
-        length: resBody.data?.length,
-      });
+
       if (resBody.data && resBody.data.length >= 1) {
         set({
           portfolios: resBody.data,
