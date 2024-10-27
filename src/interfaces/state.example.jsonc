@@ -1,0 +1,40 @@
+{
+  "personalData": {
+    "name": "peemtanapat",
+    "inflationRate": 3,
+    "startingAge": 27,
+    "retirementAge": 60,
+    "retirePeriod": 20,
+    "desiredMonthlyIncome": 20000
+  },
+  // create two default portfolios
+  "portfolios": [
+    {
+      "name": "stock",
+      "startingAge": 27,
+      "principalAmount": 100000,
+      "monthlySave": 30000,
+      "annualReturn": 8,
+      "annualReturnList": [],
+      "monthlySaveList": []
+    },
+    {
+      "name": "land",
+      "startingAge": 40,
+      "principalAmount": 2500000,
+      "monthlySave": 0,
+      "annualReturn": 5,
+      "annualReturnList": [],
+      "monthlySaveList": null
+    },
+    {
+      "name": "cash",
+      "startingAge": 27,
+      "principalAmount": 100000,
+      "monthlySave": 10000,
+      "annualReturn": 2,
+      "annualReturnList": [],
+      "monthlySaveList": []
+    }
+  ]
+}

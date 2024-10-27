@@ -1,60 +1,52 @@
-import { PreAssumptionInterface } from "@/interfaces/data";
+import { State } from "@/interfaces/data";
 
-export function calculate({
-  retirePeriod,
-  startingAge,
-  retirementAge,
-  principalAmount,
-  monthlySave,
-  annualReturn,
-  annualReturnList,
-  monthlySaveList,
-  inflationRate,
-  desiredMonthlyIncome = 20000,
-}: PreAssumptionInterface) {
+export function calculate({ personalData, portfolios }: State) {
   const data = [];
-  const years = retirementAge - startingAge;
-  let netValueStock = principalAmount;
-  let netValueSaving = principalAmount;
-  const inflation = 1 + inflationRate / 100;
-  let netGoalWithInflation =
-    desiredMonthlyIncome *
-    12 *
-    (retirePeriod ?? 0) *
-    Math.pow(inflation, years);
+  const { startingAge, retirementAge } = personalData;
 
-  for (let index = 0; index < years; index++) {
-    const currAge = startingAge + index;
-    const year = currAge < 9 ? "0" + currAge : currAge;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const portTracker: any = {};
 
-    let yearlySaving: number = monthlySave * 12;
-    let currAnnualReturn: number = annualReturn;
+  for (const port of portfolios) {
+    portTracker[port.name] = port.principalAmount;
+  }
 
-    if (monthlySaveList != null && monthlySaveList.length >= 1) {
-      yearlySaving = monthlySaveList[index] * 12;
-    }
-    if (annualReturnList != null && annualReturnList.length >= 1) {
-      currAnnualReturn = annualReturnList[index];
-    }
-
-    const rawStock = netValueStock + yearlySaving;
-    const rawSaving = netValueSaving + yearlySaving;
-
-    const currStock = rawStock * (1 + currAnnualReturn / 100);
-    const currSaving = rawSaving * 1.02;
-    const currNetGoalWithInflation = netGoalWithInflation;
-
-    netValueStock = currStock;
-    netValueSaving = currSaving;
-    netGoalWithInflation = currNetGoalWithInflation;
-
-    data.push({
+  for (let year = startingAge; year < retirementAge; year++) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const portYear: any = {
       year,
-      stock: Math.round(currStock),
-      saving: Math.round(currSaving),
-      goal: Math.round(netGoalWithInflation),
-    });
+    };
+
+    for (const port of portfolios) {
+      if (year >= (port.startingAge ?? startingAge)) {
+        const currValue = portTracker[port.name];
+        const annualReturn = 1 + port.annualReturn / 100;
+        const newValue = Math.round(
+          (currValue + port.monthlySave * 12) * annualReturn
+        );
+        portYear[port.name] = newValue;
+        portTracker[port.name] = newValue;
+      }
+    }
+
+    data.push(portYear);
   }
 
   return data;
+}
+
+interface calcFutureValueInterface {
+  principalAmount: number;
+  compoundPercent: number;
+  years: number;
+}
+
+export function calcFutureValue({
+  principalAmount,
+  compoundPercent,
+  years,
+}: calcFutureValueInterface) {
+  const compound = 1 + compoundPercent / 100;
+
+  return principalAmount * Math.pow(compound, years);
 }

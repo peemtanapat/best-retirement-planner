@@ -1,22 +1,22 @@
-interface INumberInput {
+interface ITextInput {
   inputKey: string;
   label: string;
-  value: number;
+  value: string;
   onChange: (inputKey: string, newValue: string) => void;
 }
 
-export default function NumberInput({
+export default function TextInput({
   inputKey,
   label,
   value,
   onChange,
-}: Readonly<INumberInput>) {
+}: Readonly<ITextInput>) {
   return (
     <div>
       <label>{label}</label>
       <input
         type="text"
-        inputMode="numeric"
+        inputMode="text"
         title="input"
         value={value}
         onChange={(event) => onChange(inputKey, event.target.value)}

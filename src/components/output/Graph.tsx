@@ -1,31 +1,27 @@
-import { PreAssumptionInterface } from "@/interfaces/data";
+import { useStateStore } from "@/store/useStateStore";
 import { calculate } from "@/utilities/calculators";
 import React, { useEffect, useState } from "react";
 import {
   LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
-  Dot,
 } from "recharts";
+import getGraphLines from "./GraphLines";
 
-interface GraphProps {
-  input: PreAssumptionInterface;
-}
-
-const goalColor = "#808080";
-const mainColor = "#008254";
-const secondColor = "#0063b9";
-
-export default function Graph(props: GraphProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function Graph() {
   const isServerSide = useIsServerSide();
+
+  const { state } = useStateStore();
+
   if (isServerSide) return null;
 
-  const data = calculate(props.input);
-  const dataLength = data.length;
+  const data = calculate(state);
+
+  console.log({ data });
 
   return (
     <div className="graph-placeholder">
@@ -49,27 +45,7 @@ export default function Graph(props: GraphProps) {
           }
         />
         <Legend />
-        <Line
-          type="linearClosed"
-          dataKey="goal"
-          stroke={goalColor}
-          activeDot={{ r: 5 }}
-          label={<CustomLabel color={goalColor} length={dataLength} />}
-        />
-        <Line
-          type="monotone"
-          dataKey="stock"
-          stroke={mainColor}
-          activeDot={{ r: 5 }}
-          label={<CustomLabel color={mainColor} length={dataLength} />}
-        />
-        <Line
-          type="monotone"
-          dataKey="saving"
-          stroke={secondColor}
-          activeDot={{ r: 5 }}
-          label={<CustomLabel color={secondColor} length={dataLength} />}
-        />
+        {getGraphLines(state)}
       </LineChart>
     </div>
   );
@@ -83,43 +59,4 @@ export const useIsServerSide = () => {
   }, [setIsServerSide]);
 
   return isServerSide;
-};
-
-interface CustomLabelInterface {
-  x?: number;
-  y?: number;
-  value?: number;
-  color: string;
-  index?: number;
-  length: number;
-}
-
-const CustomLabel = ({
-  x = 0,
-  y = 0,
-  value = 0,
-  color,
-  index,
-  length,
-}: CustomLabelInterface) => {
-  if (index === length - 1) {
-    const offset = 10;
-    return (
-      <g>
-        <Dot cx={x} cy={y} r={5} fill={color} stroke="none" />
-        <text
-          x={x}
-          y={y - offset}
-          dy={-4}
-          fill={color}
-          fontSize="1rem"
-          textAnchor="middle"
-        >
-          {new Intl.NumberFormat("en-US").format(value)}
-        </text>
-      </g>
-    );
-  }
-
-  return null;
 };

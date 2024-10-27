@@ -10,16 +10,19 @@
     "test": "jest"
   },
   "dependencies": {
-    "@formulajs/formulajs": "github:formulajs/formulajs",
     "best-retirement-planner": "file:",
-    "next": "14.2.13",
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.7.2",
+    "next": "latest",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
-    "recharts": "^2.13.0-alpha.5"
+    "recharts": "^2.13.0-alpha.5",
+    "zustand": "^5.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
+    "@types/mongoose": "^5.11.97",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
