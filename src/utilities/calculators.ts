@@ -1,6 +1,8 @@
 import { State } from "@/interfaces/data";
 
 export function calculate({ personalData, portfolios }: State) {
+  if (!personalData || !portfolios) return [];
+
   const data = [];
   const { startingAge, retirementAge } = personalData;
 

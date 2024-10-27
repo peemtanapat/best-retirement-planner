@@ -26,14 +26,13 @@ export const useStateStore = create<_Data & State & Actions>((set, get) => ({
       const res = await fetch("/api/states/671c7d065af0da82e78b3e86");
 
       const state = await res.json();
-      console.log({ resFetchData: state.state });
       set({
         state: state.state,
         personalData: state.state.personalData,
         portfolios: state.state.portfolios,
       });
     } catch (error) {
-      console.log({ error_fetchData: error });
+      console.log({ error });
     }
   },
   addOrUpdatePortfolio: (newPort: IPortfolio) => {

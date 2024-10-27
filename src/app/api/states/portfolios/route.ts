@@ -2,32 +2,77 @@ import dbConnect from "@/lib/dbConnect";
 import { NextRequest, NextResponse } from "next/server";
 import States from "../../../../lib/schema";
 import { IPortfolio, State } from "@/interfaces/data";
+import { INITIAL_STATE } from "@/store/state";
+
+export async function PUT(req: NextRequest) {
+  await dbConnect();
+
+  try {
+    const newPortfolios: IPortfolio[] = await req.json();
+
+    const prevState: State | null = await States.findById(
+      "671e046876393e6a0b735aba"
+    );
+
+    if (prevState != null) {
+      const newStates: State = {
+        personalData: prevState.personalData,
+        portfolios: newPortfolios,
+      };
+
+      await States.updateOne(newStates);
+
+      return NextResponse.json(
+        { success: true, data: newPortfolios },
+        { status: 200 }
+      );
+    }
+
+    // create new State
+    const newState: State = {
+      personalData: INITIAL_STATE.personalData,
+      portfolios: newPortfolios,
+    };
+
+    States.create(newState);
+
+    return NextResponse.json(
+      { success: true, data: newPortfolios, message: "created new State" },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.log({ error });
+    return NextResponse.json({ success: false }, { status: 500 });
+  }
+}
 
 export async function POST(req: NextRequest) {
   await dbConnect();
 
   try {
     const newPortfolio: IPortfolio = await req.json();
-    console.log({ request: newPortfolio });
 
     const prevState: State | null = await States.findById(
-      "671c7d065af0da82e78b3e86"
+      "671e046876393e6a0b735aba"
     );
 
     if (prevState != null) {
-      const prevPortfolios = prevState.portfolios.filter(
-        (port) => port.name !== newPortfolio.name
-      );
+      const updatedPortfolios = prevState.portfolios?.map((currPort) => {
+        if (currPort.name === newPortfolio.name) {
+          return newPortfolio;
+        }
+        return currPort;
+      });
 
       const newStates: State = {
         personalData: prevState.personalData,
-        portfolios: [...prevPortfolios, newPortfolio],
+        portfolios: updatedPortfolios,
       };
 
-      const updatedState = await States.updateOne(newStates);
+      await States.updateOne(newStates);
 
       return NextResponse.json(
-        { success: true, state: updatedState },
+        { success: true, data: newPortfolio },
         { status: 200 }
       );
     }

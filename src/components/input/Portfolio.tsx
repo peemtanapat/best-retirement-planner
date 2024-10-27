@@ -1,7 +1,8 @@
 import NumberInput from "./NumberInput";
 import { IPortfolio } from "@/interfaces/data";
 import TextInput from "./TextInput";
-import * as StateClient from "../client";
+
+import { usePortfolioStore } from "@/store/usePortfolioStore";
 
 export interface PortfolioProps {
   portfolio: IPortfolio;
@@ -12,15 +13,15 @@ export default function Portfolio({
   portfolio,
   setPortfolio,
 }: Readonly<PortfolioProps>) {
+  const { addOrUpdatePortfolio } = usePortfolioStore();
+
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await StateClient.createOrUpdatePortfolio(portfolio);
+    addOrUpdatePortfolio(portfolio);
   };
 
   const handleOnChange = (inputKey: string, value: string | number) => {
-    console.log({ message: inputKey, value });
-
     setPortfolio({ ...portfolio, [inputKey]: value });
   };
 

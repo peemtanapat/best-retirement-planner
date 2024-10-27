@@ -17,8 +17,10 @@ const StateSchema = new mongoose.Schema<StateDocument>({
   },
   portfolios: [
     {
+      seq: { type: Number },
       name: { type: String, required: true },
       startingAge: { type: Number },
+      endingAge: { type: Number },
       principalAmount: { type: Number, required: true },
       monthlySave: { type: Number, required: true },
       annualReturn: { type: Number, required: true },

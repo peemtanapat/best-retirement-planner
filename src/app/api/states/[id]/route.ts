@@ -6,13 +6,11 @@ export async function GET(req: NextRequest) {
   await dbConnect();
 
   const stateId = req.nextUrl.searchParams.get("id");
-  console.log({ stateId });
 
   try {
-    const state = await States.findById("671c7d065af0da82e78b3e86");
-    console.log({ stateById: state });
+    const state = await States.findById("671e046876393e6a0b735aba");
 
-    return NextResponse.json({ success: true, state }, { status: 200 });
+    return NextResponse.json({ success: true, data: state }, { status: 200 });
   } catch (error) {
     console.log({ error });
     return NextResponse.json({ success: false }, { status: 500 });

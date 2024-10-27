@@ -5,8 +5,7 @@ export default function AllInputs() {
   return (
     <section id="user-input">
       <div id="input-group">
-        <Personal />
-        <br />
+        {/* <Personal /> */}
         <Portfolios />
       </div>
     </section>

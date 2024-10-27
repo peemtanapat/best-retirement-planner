@@ -6,8 +6,6 @@ export default function Personal() {
   const { personalData, setPersonalData } = useStateStore();
 
   const handleOnChange = (inputKey: string, value: string | number) => {
-    console.log({ message: inputKey, value });
-
     setPersonalData({ ...personalData, [inputKey]: value });
   };
 

@@ -2,18 +2,16 @@
 
 import Graph from "@/components/output/Graph";
 import AllInputs from "@/components/input/AllInputs";
-import { useStateStore } from "@/store/useStateStore";
 import { useEffect } from "react";
+import { usePortfolioStore } from "@/store/usePortfolioStore";
 
 export default function Page() {
-  console.log({ env: process.env.MONGODB_URI });
-
-  const { portfolios, fetchData } = useStateStore();
+  const { portfolios, fetchPortfolios } = usePortfolioStore();
   const totalPortfolio = portfolios?.length;
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    fetchPortfolios();
+  }, [fetchPortfolios]);
 
   return (
     <div className="container">

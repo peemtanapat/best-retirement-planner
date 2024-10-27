@@ -10,18 +10,18 @@ import {
   Legend,
 } from "recharts";
 import getGraphLines from "./GraphLines";
+import { usePortfolioStore } from "@/store/usePortfolioStore";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function Graph() {
   const isServerSide = useIsServerSide();
 
-  const { state } = useStateStore();
+  const { personalData } = useStateStore();
+  const { portfolios, isLoading } = usePortfolioStore();
 
+  if (isLoading) return <p>Loading...</p>;
   if (isServerSide) return null;
 
-  const data = calculate(state);
-
-  console.log({ data });
+  const data = calculate({ personalData, portfolios });
 
   return (
     <div className="graph-placeholder">
@@ -45,7 +45,7 @@ export default function Graph() {
           }
         />
         <Legend />
-        {getGraphLines(state)}
+        {portfolios && getGraphLines(portfolios)}
       </LineChart>
     </div>
   );

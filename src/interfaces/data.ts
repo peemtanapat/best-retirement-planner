@@ -6,6 +6,7 @@ export interface StateDocument extends mongoose.Document {
 }
 
 export interface State {
+  isLoading?: boolean;
   personalData: IPersonalData;
   portfolios: IPortfolio[];
 }
@@ -21,8 +22,10 @@ export interface IPersonalData {
 }
 
 export interface IPortfolio {
+  seq: number;
   name: string;
-  startingAge?: number;
+  startingAge: number;
+  endingAge: number;
   principalAmount: number;
   monthlySave: number;
   annualReturn: number;

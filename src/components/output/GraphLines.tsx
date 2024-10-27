@@ -1,4 +1,4 @@
-import { State } from "@/interfaces/data";
+import { IPortfolio, State } from "@/interfaces/data";
 import { Dot, Line } from "recharts";
 
 interface GraphLinesProps {
@@ -43,17 +43,9 @@ const mainColor = "#008254";
 //   );
 // }
 
-export default function getGraphLines(state: State) {
-  console.log({ state });
-
-  const { startingAge, retirementAge } = state.personalData;
-  const { portfolios } = state;
-  const yearsOfSaving = retirementAge - startingAge;
-
+export default function getGraphLines(portfolios: IPortfolio[]) {
   return portfolios.map((port) => {
-    const portYearsOfSaving = port.startingAge
-      ? retirementAge - port.startingAge
-      : yearsOfSaving;
+    const yearsOfSaving = port.endingAge - port.startingAge;
     const color = port.styles?.color ?? mainColor;
 
     return (
@@ -63,7 +55,7 @@ export default function getGraphLines(state: State) {
         dataKey={port.name}
         stroke={color}
         activeDot={{ r: 5 }}
-        label={<CustomLabel color={color} length={portYearsOfSaving} />}
+        label={<CustomLabel color={color} length={yearsOfSaving} />}
       />
     );
   });
