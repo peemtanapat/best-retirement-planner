@@ -2,6 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import { NextRequest, NextResponse } from "next/server";
 import States from "../../../../../lib/schema";
 import { State } from "@/interfaces/data";
+import { getFirstState } from "../../_dev";
 
 export async function GET(req: NextRequest) {
   await dbConnect();
@@ -9,24 +10,22 @@ export async function GET(req: NextRequest) {
   const stateId = req.nextUrl.searchParams.get("id");
 
   try {
-    const state: State | null = await States.findById(
-      "671e046876393e6a0b735abb"
-    );
-    // start - for Dev
-    if (!state) {
-      const state2: State[] | null = await States.find({}).limit(1);
-      if (state2 && state2.length >= 1) {
-        return NextResponse.json(
-          { success: true, data: state2[0].portfolios },
-          { status: 200 }
-        );
-      } else {
-        return NextResponse.json({ success: false, data: [] }, { status: 200 });
-      }
+    let state: State | null
+
+    if (process.env.IS_DEV_MODE) {
+      state = await getFirstState();
+    } else {
+      state = await States.findById(
+        stateId
+      );
     }
-    // end - for Dev
+
+    if (!state) {
+      return NextResponse.json({ success: false, data: [] }, { status: 200 });
+    }
+
     return NextResponse.json(
-      { success: true, data: state?.portfolios },
+      { success: true, data: state.portfolios },
       { status: 200 }
     );
   } catch (error) {

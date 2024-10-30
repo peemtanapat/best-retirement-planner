@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import States from "../../../../lib/schema";
 import { IPortfolio, State } from "@/interfaces/data";
 import { INITIAL_STATE } from "@/store/state";
+import { getFirstState } from "../_dev";
 
 export async function PUT(req: NextRequest) {
   await dbConnect();
@@ -10,9 +11,15 @@ export async function PUT(req: NextRequest) {
   try {
     const newPortfolios: IPortfolio[] = await req.json();
 
-    const prevState: State | null = await States.findById(
-      "671e046876393e6a0b735aba"
-    );
+    let prevState: State | null
+
+    if (process.env.IS_DEV_MODE) {
+      prevState = await getFirstState();
+    } else {
+      prevState = await States.findById(
+        "671e046876393e6a0b735aba"
+      );
+    }
 
     if (prevState != null) {
       const newStates: State = {
